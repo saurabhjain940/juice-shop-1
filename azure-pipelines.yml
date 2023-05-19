@@ -23,6 +23,7 @@ steps:
    node -v
    npm --version
    npm install
+   npm install tar-stream
    
   displayName: 'Build Application'
 
