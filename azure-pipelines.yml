@@ -52,6 +52,9 @@ steps:
   inputs:
     rootFolderOrFile: '$(build.artifactstagingdirectory)'
     includeRootFolder: false
+    archiveType: 'tar'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).gz'
+    replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts: juice-shop-drop'
