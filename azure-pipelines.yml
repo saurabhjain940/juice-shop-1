@@ -22,8 +22,9 @@ steps:
    pwd
    node -v
    npm --version
+   npm cache clean --force
    npm install
-   npm install tar-stream
+   npm install tar-stream@1.6.2
    
   displayName: 'Build Application'
 
