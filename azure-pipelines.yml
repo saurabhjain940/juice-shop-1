@@ -24,7 +24,7 @@ steps:
    npm --version
    npm cache clean --force
    npm install
-   npm install tar-stream@1.6.2
+   
   displayName: 'Build Application'
 
 - bash: |
