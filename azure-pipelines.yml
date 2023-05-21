@@ -28,6 +28,11 @@ steps:
       echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
     displayName: 'Install SonarQube Scanner'
 
+  - script: |
+      ls sonar-scanner-4.6.2.2472-linux/bin
+    displayName: 'List SonarQube Scanner directory'
+
+
   - bash: |
       # Verify the SonarQube Scanner installation
       ls $(Agent.HomeDirectory)/sonar-scanner/bin
