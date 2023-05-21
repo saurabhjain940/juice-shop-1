@@ -11,6 +11,14 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'sonarqube'
+    scannerMode: 'MSBuild'
+    projectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
+    projectName: 'juice-shop'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '18.x'
@@ -26,6 +34,14 @@ steps:
    npm install
    
   displayName: 'Build Application'
+
+
+- task: SonarQubeAnalyze@5
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
+
 
 - bash: |
    # Write your commands here
