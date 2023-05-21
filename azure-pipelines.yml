@@ -19,6 +19,13 @@ steps:
     projectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
     projectName: 'juice-shop'
 
+- task: UseDotNet@2
+  displayName: 'Use MSBuild'
+  inputs:
+    packageType: 'sdk'
+    version: '15.0.40115.0'
+
+
 - task: PowerShell@2
   displayName: 'Check MSBuild version'
   inputs:
