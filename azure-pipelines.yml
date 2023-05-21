@@ -24,13 +24,9 @@ steps:
       curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
       unzip sonar-scanner.zip
       mv sonar-scanner-* sonar-scanner
+      mkdir -p $(Agent.ToolsDirectory)/.sonarqube/conf
       echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
     displayName: 'Install SonarQube Scanner'
-
-  - bash: |
-      # Run SonarQube analysis
-      $(Agent.HomeDirectory)/sonar-scanner/bin/sonar-scanner
-    displayName: 'Run SonarQube Analysis'
 
 
   - task: NodeTool@0
@@ -50,10 +46,9 @@ steps:
       pwd
     displayName: 'Build Application'
 
-  # Run Code Analysis using SonarQube scanner
   - bash: |
       # Run SonarQube analysis
-      sonar-scanner
+      $(Agent.HomeDirectory)/sonar-scanner/bin/sonar-scanner
     displayName: 'Run SonarQube Analysis'
 
   - task: SonarQubeAnalyze@5
