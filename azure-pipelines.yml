@@ -27,6 +27,7 @@ steps:
       mv sonar-scanner-* sonar-scanner
       mkdir -p $(Agent.ToolsDirectory)/.sonarqube/conf
       echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
+      echo "sonar.scanner.metadataFilePath=$(Agent.HomeDirectory)/sonar-scanner/report-task.txt" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
       echo '------------------------------------pwd------------------------------'
       pwd
       cat $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
