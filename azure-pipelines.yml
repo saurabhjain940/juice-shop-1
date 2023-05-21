@@ -11,13 +11,23 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-
+# Prepare Analysis Configuration task
 - task: SonarQubePrepare@5
   inputs:
     SonarQube: 'sonarqube'
-    scannerMode: 'MSBuild'
-    projectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
-    projectName: 'juice-shop'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
+    cliSources: '.'
+
+# Run Code Analysis task
+- task: SonarQubeAnalyze@5
+
+# Publish Quality Gate Result task
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
+
 
 - task: UseDotNet@2
   displayName: 'Use MSBuild'
@@ -52,12 +62,6 @@ steps:
    
   displayName: 'Build Application'
 
-
-- task: SonarQubeAnalyze@5
-
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'
 
 
 - bash: |
