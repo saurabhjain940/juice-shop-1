@@ -67,6 +67,10 @@ steps:
 
   - task: SonarQubeAnalyze@5
 
+  - script: |
+      ls -R /home/vsts/work/ 
+    displayName: 'Print Scanner directory structure'
+
   - task: SonarQubePublish@5
     inputs:
       pollingTimeoutSec: '300'
