@@ -29,6 +29,12 @@ steps:
     displayName: 'Install SonarQube Scanner'
 
   - bash: |
+      # Verify the SonarQube Scanner installation
+      ls $(Agent.HomeDirectory)/sonar-scanner/bin
+    displayName: 'Verify SonarQube Scanner Installation'
+
+
+  - bash: |
       # Run SonarQube analysis
       sonar-scanner
     displayName: 'Run SonarQube Analysis'
