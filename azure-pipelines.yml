@@ -29,6 +29,7 @@ steps:
       echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
       echo '------------------------------------pwd------------------------------'
       pwd
+      cat $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
       echo '------------------------------------ls------------------------------'
       ls -R .
     displayName: 'Install SonarQube Scanner'
