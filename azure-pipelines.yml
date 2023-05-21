@@ -33,20 +33,20 @@ steps:
     displayName: 'Install SonarQube Scanner'
 
   - script: |
-      ls -R sonar-scanner-4.6.2.2472-linux
+      ls ./sonar-scanner/bin/
     displayName: 'Print SonarQube Scanner directory structure'
 
 
 
   - bash: |
       # Verify the SonarQube Scanner installation
-      ls $(Agent.HomeDirectory)/sonar-scanner/bin
+      ls ./sonar-scanner/bin/
     displayName: 'Verify SonarQube Scanner Installation'
 
 
   - bash: |
       # Run SonarQube analysis
-      sonar-scanner
+      ./sonar-scanner/bin/sonar-scanner
     displayName: 'Run SonarQube Analysis'
 
   - task: NodeTool@0
