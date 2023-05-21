@@ -23,7 +23,8 @@ steps:
   displayName: 'Use MSBuild'
   inputs:
     packageType: 'sdk'
-    version: '15.0.40115.0'
+    version: '2.x'  # Replace with the correct version format
+
 
 
 - task: PowerShell@2
