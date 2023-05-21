@@ -34,8 +34,13 @@ steps:
       npm install
       echo "------------------------------------pwd--------------------------------"
       pwd
-
     displayName: 'Build Application'
+
+  # Run Code Analysis using SonarQube scanner
+  - bash: |
+      # Run SonarQube analysis
+      sonar-scanner
+    displayName: 'Run SonarQube Analysis'
 
   - task: SonarQubeAnalyze@5
 
