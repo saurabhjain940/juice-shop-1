@@ -19,18 +19,18 @@ steps:
       cliProjectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
       cliSources: '.'
 
-- script: |
-    # Download and install SonarQube Scanner
-    curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-    unzip sonar-scanner.zip
-    mv sonar-scanner-* sonar-scanner
-    echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
-  displayName: 'Install SonarQube Scanner'
+  - script: |
+      # Download and install SonarQube Scanner
+      curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+      unzip sonar-scanner.zip
+      mv sonar-scanner-* sonar-scanner
+      echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
+    displayName: 'Install SonarQube Scanner'
 
-- bash: |
-    # Run SonarQube analysis
-    $(Agent.HomeDirectory)/sonar-scanner/bin/sonar-scanner
-  displayName: 'Run SonarQube Analysis'
+  - bash: |
+      # Run SonarQube analysis
+      $(Agent.HomeDirectory)/sonar-scanner/bin/sonar-scanner
+    displayName: 'Run SonarQube Analysis'
 
 
   - task: NodeTool@0
