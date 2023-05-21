@@ -28,6 +28,10 @@ steps:
       echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
     displayName: 'Install SonarQube Scanner'
 
+  - bash: |
+      # Run SonarQube analysis
+      sonar-scanner
+    displayName: 'Run SonarQube Analysis'
 
   - task: NodeTool@0
     inputs:
@@ -46,10 +50,7 @@ steps:
       pwd
     displayName: 'Build Application'
 
-  - bash: |
-      # Run SonarQube analysis
-      $(Agent.HomeDirectory)/sonar-scanner/bin/sonar-scanner
-    displayName: 'Run SonarQube Analysis'
+
 
   - task: SonarQubeAnalyze@5
 
