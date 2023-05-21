@@ -5,86 +5,62 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  - master
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-# Prepare Analysis Configuration task
-- task: SonarQubePrepare@5
-  inputs:
-    SonarQube: 'sonarqube'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
-    cliSources: '.'
+  - task: SonarQubePrepare@5
+    inputs:
+      SonarQube: 'sonarqube'
+      scannerMode: 'CLI'
+      configMode: 'manual'
+      cliProjectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
+      cliSources: '.'
 
-# Run Code Analysis task
-- task: SonarQubeAnalyze@5
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
 
-# Publish Quality Gate Result task
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'
+  - bash: |
+      # Write your commands here
+      echo '------------------------------------pwd------------------------------'
+      pwd
+      node -v
+      npm --version
+      npm cache clean --force
+      npm install
+      echo "------------------------------------pwd--------------------------------"
+      pwd
 
+    displayName: 'Build Application'
 
-- task: UseDotNet@2
-  displayName: 'Use MSBuild'
-  inputs:
-    packageType: 'sdk'
-    version: '2.x'  # Replace with the correct version format
+  - task: SonarQubeAnalyze@5
 
+  - task: SonarQubePublish@5
+    inputs:
+      pollingTimeoutSec: '300'
 
+  - bash: |
+      # Write your commands here
+      echo "------------"
+      pwd
+      ls $(build.artifactstagingdirectory)
+    displayName: 'Bash Script'
 
-- task: PowerShell@2
-  displayName: 'Check MSBuild version'
-  inputs:
-    targetType: 'inline'
-    script: |
-      $msbuildVersion = Get-Command -Name 'msbuild' | Select-Object -ExpandProperty Version
-      Write-Host "MSBuild version: $msbuildVersion"
+  - task: ArchiveFiles@2
+    displayName: 'Archive files'
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
 
-
-- task: NodeTool@0
-  inputs:
-    versionSpec: '18.x'
-  displayName: 'Install Node.js'
-
-- bash: |
-   # Write your commands here
-   echo 'Hello world'
-   pwd
-   node -v
-   npm --version
-   npm cache clean --force
-   npm install
-   
-  displayName: 'Build Application'
-
-
-
-- bash: |
-   # Write your commands here
-   
-   echo "------------"
-   
-   pwd 
-   ls $(build.artifactstagingdirectory)
-  displayName: 'Bash Script'
-
-
-- task: ArchiveFiles@2
-  displayName: 'Archive files'
-  inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish artifacts: juice-shop-drop'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    ArtifactName: 'juice-drop'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish artifacts: juice-shop-drop'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      ArtifactName: 'juice-drop'
