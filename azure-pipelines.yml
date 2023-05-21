@@ -19,6 +19,15 @@ steps:
     projectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
     projectName: 'juice-shop'
 
+- task: PowerShell@2
+  displayName: 'Check MSBuild version'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $msbuildVersion = Get-Command -Name 'msbuild' | Select-Object -ExpandProperty Version
+      Write-Host "MSBuild version: $msbuildVersion"
+
+
 - task: NodeTool@0
   inputs:
     versionSpec: '18.x'
