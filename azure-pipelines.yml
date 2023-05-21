@@ -18,6 +18,7 @@ steps:
       configMode: 'manual'
       cliProjectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
       cliSources: '.'
+      cliOutput: '$(System.DefaultWorkingDirectory)/sonarqube'
 
   - script: |
       # Download and install SonarQube Scanner
@@ -74,6 +75,7 @@ steps:
   - task: SonarQubePublish@5
     inputs:
       pollingTimeoutSec: '300'
+      reportPath: '$(System.DefaultWorkingDirectory)/sonarqube/report-task.txt'
 
   - bash: |
       # Write your commands here
