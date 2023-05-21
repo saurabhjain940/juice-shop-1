@@ -43,12 +43,6 @@ steps:
       ls ./sonar-scanner/bin/
     displayName: 'Verify SonarQube Scanner Installation'
 
-
-  - bash: |
-      # Run SonarQube analysis
-      ./sonar-scanner/bin/sonar-scanner
-    displayName: 'Run SonarQube Analysis'
-
   - task: NodeTool@0
     inputs:
       versionSpec: '18.x'
@@ -66,7 +60,10 @@ steps:
       pwd
     displayName: 'Build Application'
 
-
+  - bash: |
+      # Run SonarQube analysis
+      ./sonar-scanner/bin/sonar-scanner
+    displayName: 'Run SonarQube Analysis'
 
   - task: SonarQubeAnalyze@5
 
