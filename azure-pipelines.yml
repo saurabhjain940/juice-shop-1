@@ -29,8 +29,9 @@ steps:
     displayName: 'Install SonarQube Scanner'
 
   - script: |
-      ls sonar-scanner-4.6.2.2472-linux/bin
-    displayName: 'List SonarQube Scanner directory'
+      ls -R sonar-scanner-4.6.2.2472-linux
+    displayName: 'Print SonarQube Scanner directory structure'
+
 
 
   - bash: |
