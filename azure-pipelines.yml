@@ -86,10 +86,8 @@ steps:
         echo $reportTaskFile
 
         # Copy the report-task.txt file to the desired path
-        cp "$reportTaskFile" /home/vsts/work/1/s/report-task.txt
+        cp $reportTaskFile /home/vsts/work/1/s/
 
-
-        cp ${dynamicPath}report-task.txt /home/vsts/work/1/s/report-task.txt
 
 
   - task: SonarQubePublish@5
