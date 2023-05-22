@@ -51,17 +51,17 @@ steps:
       versionSpec: '18.x'
     displayName: 'Install Node.js'
 
-  # - bash: |
-  #     # Write your commands here
-  #     echo '------------------------------------pwd------------------------------'
-  #     pwd
-  #     node -v
-  #     npm --version
-  #     # npm cache clean --force
-  #     npm install
-  #     echo "------------------------------------pwd--------------------------------"
-  #     pwd
-  #   displayName: 'Build Application'
+  - bash: |
+      # Write your commands here
+      echo '------------------------------------pwd------------------------------'
+      pwd
+      node -v
+      npm --version
+      # npm cache clean --force
+      npm install
+      echo "------------------------------------pwd--------------------------------"
+      pwd
+    displayName: 'Build Application'
 
   # - bash: |
   #     # Run SonarQube analysis
@@ -93,7 +93,6 @@ steps:
   - task: SonarQubePublish@5
     inputs:
       pollingTimeoutSec: '300'
-      reportPath: '$(System.DefaultWorkingDirectory)/sonarqube/report-task.txt'
 
   - bash: |
       # Write your commands here
@@ -111,8 +110,8 @@ steps:
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
 
-  # - task: PublishBuildArtifacts@1
-  #   displayName: 'Publish artifacts: juice-shop-drop'
-  #   inputs:
-  #     PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-  #     ArtifactName: 'juice-drop'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish artifacts: juice-shop-drop'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      ArtifactName: 'juice-drop'
