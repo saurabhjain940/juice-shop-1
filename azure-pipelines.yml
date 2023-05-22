@@ -74,6 +74,18 @@ steps:
       ls -R /home/vsts/work/ 
     displayName: 'Print Scanner directory structure'
 
+  - task: Bash@3
+    displayName: 'Copy report-task.txt'
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Get the dynamic part of the path
+        dynamicPath=$(ls -d /home/vsts/work/_temp/sonar/*/)
+
+        # Copy the report-task.txt file to the desired path
+        cp ${dynamicPath}report-task.txt /home/vsts/work/1/s/report-task.txt
+
+
   - task: SonarQubePublish@5
     inputs:
       pollingTimeoutSec: '300'
