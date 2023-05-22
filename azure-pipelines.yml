@@ -17,34 +17,33 @@ steps:
       scannerMode: 'CLI'
       configMode: 'manual'
       cliProjectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
-      cliSources: '.'
-      cliOutput: '$(System.DefaultWorkingDirectory)/sonarqube'
+      cliSources: '$(System.DefaultWorkingDirectory)'
 
-  - script: |
-      # Download and install SonarQube Scanner
-      curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-      unzip sonar-scanner.zip
-      mv sonar-scanner-* sonar-scanner
-      mkdir -p $(Agent.ToolsDirectory)/.sonarqube/conf
-      echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
-      echo "sonar.scanner.metadataFilePath=$(Agent.HomeDirectory)/sonar-scanner/report-task.txt" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
-      echo '------------------------------------pwd------------------------------'
-      pwd
-      cat $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
-      echo '------------------------------------ls------------------------------'
-      ls -R .
-    displayName: 'Install SonarQube Scanner'
+  # - script: |
+  #     # Download and install SonarQube Scanner
+  #     curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+  #     unzip sonar-scanner.zip
+  #     mv sonar-scanner-* sonar-scanner
+  #     mkdir -p $(Agent.ToolsDirectory)/.sonarqube/conf
+  #     echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
+  #     echo "sonar.scanner.metadataFilePath=$(Agent.HomeDirectory)/sonar-scanner/report-task.txt" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
+  #     echo '------------------------------------pwd------------------------------'
+  #     pwd
+  #     cat $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
+  #     echo '------------------------------------ls------------------------------'
+  #     ls -R .
+  #   displayName: 'Install SonarQube Scanner'
 
-  - script: |
-      ls ./sonar-scanner/bin/
-    displayName: 'Print SonarQube Scanner directory structure'
-
+  # - script: |
+  #     ls ./sonar-scanner/bin/
+  #   displayName: 'Print SonarQube Scanner directory structure'
 
 
-  - bash: |
-      # Verify the SonarQube Scanner installation
-      ls ./sonar-scanner/bin/
-    displayName: 'Verify SonarQube Scanner Installation'
+
+  # - bash: |
+  #     # Verify the SonarQube Scanner installation
+  #     ls ./sonar-scanner/bin/
+  #   displayName: 'Verify SonarQube Scanner Installation'
 
   - task: NodeTool@0
     inputs:
@@ -57,16 +56,16 @@ steps:
       pwd
       node -v
       npm --version
-      npm cache clean --force
+      # npm cache clean --force
       npm install
       echo "------------------------------------pwd--------------------------------"
       pwd
     displayName: 'Build Application'
 
-  - bash: |
-      # Run SonarQube analysis
-      ./sonar-scanner/bin/sonar-scanner
-    displayName: 'Run SonarQube Analysis'
+  # - bash: |
+  #     # Run SonarQube analysis
+  #     ./sonar-scanner/bin/sonar-scanner
+  #   displayName: 'Run SonarQube Analysis'
 
   - task: SonarQubeAnalyze@5
 
