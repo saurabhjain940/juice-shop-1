@@ -74,15 +74,21 @@ steps:
       ls -R /home/vsts/work/ 
     displayName: 'Print Scanner directory structure'
 
+
   - task: Bash@3
     displayName: 'Copy report-task.txt'
     inputs:
       targetType: 'inline'
       script: |
-        # Get the dynamic part of the path
-        dynamicPath=$(ls -d /home/vsts/work/_temp/sonar/*/)
+        # Find the report-task.txt file
+        reportTaskFile=$(find /home/vsts/work/_temp/sonar -name report-task.txt)
+
+        echo $reportTaskFile
 
         # Copy the report-task.txt file to the desired path
+        cp "$reportTaskFile" /home/vsts/work/1/s/report-task.txt
+
+
         cp ${dynamicPath}report-task.txt /home/vsts/work/1/s/report-task.txt
 
 
