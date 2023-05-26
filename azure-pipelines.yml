@@ -12,13 +12,13 @@ pool:
 
 steps:
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'Moon'
-    organization: 'sjain'
-    scannerMode: 'CLI'
-    configMode: 'file'
-      cliSources: '$(System.DefaultWorkingDirectory)'
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'Moon'
+      organization: 'sjain'
+      scannerMode: 'CLI'
+      configMode: 'file'
+        cliSources: '$(System.DefaultWorkingDirectory)'
 
   - task: NodeTool@0
     inputs:
