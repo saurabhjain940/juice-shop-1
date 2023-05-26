@@ -11,14 +11,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'SonarCloud'
-      organization: 'sjain940'
-      scannerMode: 'CLI'
-      configMode: 'manual'
-      cliProjectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
-      cliProjectName: 'Moon'
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'Moon'
+    organization: 'sjain'
+    scannerMode: 'CLI'
+    configMode: 'file'
       cliSources: '$(System.DefaultWorkingDirectory)'
 
   - task: NodeTool@0
