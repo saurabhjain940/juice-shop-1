@@ -11,40 +11,15 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  - task: SonarQubePrepare@5
+  - task: SonarCloudPrepare@1
     inputs:
-      SonarQube: 'sonarqube'
+      SonarCloud: 'SonarCloud'
+      organization: 'sjain940'
       scannerMode: 'CLI'
       configMode: 'manual'
       cliProjectKey: 'Moon_Moon_AYg0XejcJn4pDFUjzOOD'
       cliProjectName: 'Moon'
       cliSources: '$(System.DefaultWorkingDirectory)'
-
-  # - script: |
-  #     # Download and install SonarQube Scanner
-  #     curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-  #     unzip sonar-scanner.zip
-  #     mv sonar-scanner-* sonar-scanner
-  #     mkdir -p $(Agent.ToolsDirectory)/.sonarqube/conf
-  #     echo "sonar.scanner.home=$(Agent.HomeDirectory)/sonar-scanner" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
-  #     echo "sonar.scanner.metadataFilePath=$(Agent.HomeDirectory)/sonar-scanner/report-task.txt" >> $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
-  #     echo '------------------------------------pwd------------------------------'
-  #     pwd
-  #     cat $(Agent.ToolsDirectory)/.sonarqube/conf/sonar-scanner.properties
-  #     echo '------------------------------------ls------------------------------'
-  #     ls -R .
-  #   displayName: 'Install SonarQube Scanner'
-
-  # - script: |
-  #     ls ./sonar-scanner/bin/
-  #   displayName: 'Print SonarQube Scanner directory structure'
-
-
-
-  # - bash: |
-  #     # Verify the SonarQube Scanner installation
-  #     ls ./sonar-scanner/bin/
-  #   displayName: 'Verify SonarQube Scanner Installation'
 
   - task: NodeTool@0
     inputs:
@@ -63,17 +38,11 @@ steps:
       pwd
     displayName: 'Build Application'
 
-  # - bash: |
-  #     # Run SonarQube analysis
-  #     ./sonar-scanner/bin/sonar-scanner
-  #   displayName: 'Run SonarQube Analysis'
-
-  - task: SonarQubeAnalyze@5
+  - task: SonarCloudAnalyze@1
 
   - script: |
       ls -R /home/vsts/work/ 
     displayName: 'Print Scanner directory structure'
-
 
   - task: Bash@3
     displayName: 'Copy report-task.txt'
@@ -88,9 +57,7 @@ steps:
         # Copy the report-task.txt file to the desired path
         cp $reportTaskFile /home/vsts/work/1/s/
 
-
-
-  - task: SonarQubePublish@5
+  - task: SonarCloudPublish@1
     inputs:
       pollingTimeoutSec: '300'
 
@@ -106,12 +73,4 @@ steps:
     inputs:
       rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
       includeRootFolder: false
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish artifacts: juice-shop-drop'
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      ArtifactName: 'juice-drop'
+      archiveType:
