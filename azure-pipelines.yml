@@ -22,56 +22,58 @@ steps:
       cliProjectName: 'Moon'
       cliSources: '.'
 
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '18.x'
-    displayName: 'Install Node.js'
+  # - task: NodeTool@0
+  #   inputs:
+  #     versionSpec: '18.x'
+  #   displayName: 'Install Node.js'
 
   - bash: |
-      # Write your commands here
-      echo '------------------------------------pwd------------------------------'
-      pwd
       node -v
       npm --version
-      # npm cache clean --force
       npm install
-      echo "------------------------------------pwd--------------------------------"
-      pwd
     displayName: 'Build Application'
 
   - task: SonarCloudAnalyze@1
 
-  - script: |
-      ls -R /home/vsts/work/ 
-    displayName: 'Print Scanner directory structure'
+  # - script: |
+  #     ls -R /home/vsts/work/ 
+  #   displayName: 'Print Scanner directory structure'
 
-  - task: Bash@3
-    displayName: 'Copy report-task.txt'
-    inputs:
-      targetType: 'inline'
-      script: |
-        # Find the report-task.txt file
-        reportTaskFile=$(find /home/vsts/work/_temp/sonar -name report-task.txt)
+  # - task: Bash@3
+  #   displayName: 'Copy report-task.txt'
+  #   inputs:
+  #     targetType: 'inline'
+  #     script: |
+  #       # Find the report-task.txt file
+  #       reportTaskFile=$(find /home/vsts/work/_temp/sonar -name report-task.txt)
 
-        echo $reportTaskFile
+  #       echo $reportTaskFile
 
-        # Copy the report-task.txt file to the desired path
-        cp $reportTaskFile /home/vsts/work/1/s/
+  #       # Copy the report-task.txt file to the desired path
+  #       cp $reportTaskFile /home/vsts/work/1/s/
 
   - task: SonarCloudPublish@1
     inputs:
       pollingTimeoutSec: '300'
 
-  - bash: |
-      # Write your commands here
-      echo "------------"
-      pwd
-      ls $(build.artifactstagingdirectory)
-    displayName: 'Bash Script'
+  # - bash: |
+  #     # Write your commands here
+  #     echo "------------"
+  #     pwd
+  #     ls $(build.artifactstagingdirectory)
+  #   displayName: 'Bash Script'
 
   - task: ArchiveFiles@2
     displayName: 'Archive files'
     inputs:
       rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
       includeRootFolder: false
-      archiveType:
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish artifacts: juice-shop-drop'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      ArtifactName: 'juice-drop'
