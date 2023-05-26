@@ -17,8 +17,10 @@ steps:
       SonarCloud: 'Moon'
       organization: 'sjain'
       scannerMode: 'CLI'
-      configMode: 'file'
-        cliSources: '$(System.DefaultWorkingDirectory)'
+      configMode: 'manual'
+      cliProjectKey: 'Moon'
+      cliProjectName: 'Moon'
+      cliSources: '.'
 
   - task: NodeTool@0
     inputs:
